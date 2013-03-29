@@ -1,2 +1,5 @@
+.svn/*
+bin/*
+gen/*
 
-.svn
+bin/classes/com/googlecode/gycreative/MainActivity.class
