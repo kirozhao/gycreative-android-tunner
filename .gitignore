@@ -1,4 +1,5 @@
 .svn/*
 bin/*
 gen/*
+.DS_Store
 

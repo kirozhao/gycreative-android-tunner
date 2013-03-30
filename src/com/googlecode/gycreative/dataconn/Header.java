@@ -4,7 +4,7 @@ package com.googlecode.gycreative.dataconn;
 // source: header.proto
 
 public final class Header {
-  private Header() {}
+  private Header() { }
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }

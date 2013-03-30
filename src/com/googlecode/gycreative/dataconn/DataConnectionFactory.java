@@ -1,10 +1,7 @@
 package com.googlecode.gycreative.dataconn;
 
-import java.net.ConnectException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import android.content.Context;
 
@@ -25,7 +22,7 @@ public class DataConnectionFactory {
 				return new HttpDataConnectionImpl(context,_uri);
 				
 			}else if (PROTOCOL_SOCKET.equals(_uri.getScheme())) {
-				return new SocketDataConnectionImpl(context,_uri);
+				return new SocketDataConnectionImpl(_uri);
 			}
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block

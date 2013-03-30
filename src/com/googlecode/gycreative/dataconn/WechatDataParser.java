@@ -12,10 +12,13 @@ public class WechatDataParser {
 
 	// 消息通知
 	public static final int TYPE_NOTYFY = 0;
+	/****以下3种类型表示是上次请求***/
 	// 接受图片
 	public static final int TYPE_IMAGE = 1;
+	//文本
+	public static final int TYPE_TEXT=2;
 	// 接受语音
-	public static final int TYPE_VOICE = 2;
+	public static final int TYPE_VOICE = 3;
 
 	public static final int HEADER_LENGTH = 16;
 	public static final int BUFFER_SIZE = 4096;

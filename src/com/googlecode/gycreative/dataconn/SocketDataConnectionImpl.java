@@ -6,31 +6,40 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.util.concurrent.BlockingQueue;
 
 import android.content.Context;
 
 public class SocketDataConnectionImpl extends DataConnection {
-	private Context context;
-
-
 
 	private URI uri;
 	Socket socket;
-	Thread readerThread;
+	MsgWriter msgWriter;
+	
 
 
-	public SocketDataConnectionImpl(Context context, URI uri) {
+	/**
+	 * 阻塞构造，建立长连接,创建写线程，构造线程成为读线程。
+	 * @param context
+	 * @param uri
+	 */
+	public SocketDataConnectionImpl(URI uri) {
 		super();
-		this.context = context;
+		
 		this.uri = uri;
-
+		
+		//建立socket和写线程,心跳线程并初始化parser，并开始读数据
 		init();
 	}
 
 	public void init() {
 		try {
 			socket = new Socket(uri.getHost(), uri.getPort());
-
+			msgWriter = new MsgWriter(this);
+			msgWriter.startup();
+			InputStream inputStream = socket.getInputStream();
+			parser.setInputStream(inputStream);
+			parseData();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,37 +52,42 @@ public class SocketDataConnectionImpl extends DataConnection {
 	
 	
 
+	/* (non-Javadoc)
+	 * @see com.googlecode.gycreative.dataconn.DataConnection#send(byte[])
+	 */
 	@Override
 	public void send(byte[] bytes) {
-		try {
+	
 			
-			OutputStream outputStream = socket.getOutputStream();
-			outputStream.write(bytes);
-			InputStream inputStream = socket.getInputStream();
-			parser.setInputStream(inputStream);
-			parseData();
+			msgWriter.sendMsg(bytes);
+			
+		
+		
+	}
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
+
+	@Override
+	public void shutdown() {
+		// TODO Auto-generated method stub
+		msgWriter.shutdown();
+		try {
+		parser.getInputStream().close();
+		
+			socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
-	@Override
-	public void onRecv() {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void onNotify() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onStatus() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

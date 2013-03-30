@@ -1,7 +1,5 @@
 package com.googlecode.gycreative.dataconn;
 
-import java.io.IOException;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -14,17 +12,24 @@ public abstract class  DataConnection {
 	LoadTextCallBack loadTextCallBack;
 	
 	
+	/**
+	 * 初始化协议数据解析器
+	 */
 	void init() {
 		
 		   parser = new WechatDataParser();
 	}
 
 	/**
+	 * 同步阻塞方式
 	 * @param bytes 
-	 * socket通信时表示要发送协议的字节数组，http通信时表示要post的协议的字节数组
+	 * socket通信时表示要发送协议的字节数组(默认长连接，服务器write后close()则连接关闭)，http通信时表示要post的协议的字节数组
 	 */
 	public abstract void send(byte[] bytes);
-	
+	/**
+	 * 关闭连接
+	 */
+	public abstract void shutdown();
 	/**
 	 * 这个包是前一次send的onRecv,接受完数据调用callback
 	 */
@@ -46,7 +51,8 @@ public abstract class  DataConnection {
 	}
 	
 	/**
-	 * 为其他推送的消息
+	 * 为其他推送的消息，根据不同类型进行分发，可设置listeners
+	 * 
 	 */
 	void onNotify(){
 		byte[] bytes = parser.getBody();
@@ -62,13 +68,12 @@ public abstract class  DataConnection {
 	protected void parseData() {
 		do{
 		headerinfo header = parser.getHeader();
+		//服务器已经关闭连接，或者数据错误
 		if(header == null){
-			try {
-				parser.getInputStream().close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+				shutdown();
+				
+		
 			break;
 			
 		}
@@ -80,6 +85,7 @@ public abstract class  DataConnection {
 			
 			break;
 		case WechatDataParser.TYPE_IMAGE:
+		case WechatDataParser.TYPE_TEXT:
 			onRecv();
 
 		default:
@@ -90,6 +96,8 @@ public abstract class  DataConnection {
 		
 
 	}
+	
+
 	
 	public interface LoadImageCallBack{
 		public void imageLoaded(Bitmap bitmap);
