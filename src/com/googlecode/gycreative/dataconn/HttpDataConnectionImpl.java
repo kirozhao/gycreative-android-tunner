@@ -1,15 +1,12 @@
 package com.googlecode.gycreative.dataconn;
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -17,7 +14,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -34,7 +30,6 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -71,14 +66,17 @@ public class HttpDataConnectionImpl extends DataConnection{
 		super();
 		this.context = context;
 		this.uri = uri;
+		init();
 	}
-	void init() {
-		
-		   parser = new WechatDataParser();
-	}
+	
 
 
 
+	/**
+	 * 
+	 * @param mContext
+	 * @return  多线程可安全访问,适配代理的HttpClient
+	 */
 	public static HttpClient getNewInstance(Context mContext) {
 		HttpClient newInstance;
 
@@ -186,7 +184,7 @@ public class HttpDataConnectionImpl extends DataConnection{
 
 
 	@Override
-	public void send(char[] bytes) {
+	public void send(byte[] bytes) {
 		
 		HttpClient httpClient = getNewInstance(context);
 		HttpPost httpPost = new HttpPost(uri);
@@ -206,11 +204,7 @@ public class HttpDataConnectionImpl extends DataConnection{
 		
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpPost);
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(  
-                    httpResponse.getEntity().getContent()));  
-		    
-			parser.resetReader(reader);
+			parser.resetReader(httpResponse.getEntity().getContent());
 			
 			parseData();
 		} catch (ClientProtocolException e) {
@@ -225,26 +219,6 @@ public class HttpDataConnectionImpl extends DataConnection{
 
 
 
-	@Override
-	public void onRecv() {
-		// TODO Auto-generated method stub
-		
-	}
 
-
-
-	@Override
-	public void onNotify() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onStatus() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }
