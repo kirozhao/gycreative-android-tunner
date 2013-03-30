@@ -25,6 +25,10 @@ public class ImageDbData extends DbData {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * return is [(Key, ImageProtoProcessor), ....], so you can force cast to ImageProtoProcessor, then
+	 * call toBitmap on ImageProtoProcessor object to get the bitmap
+	 */
 	@Override
 	public HashMap<String, ProtoProcessor<?>> exportData() {
 		// TODO Auto-generated method stub
@@ -47,7 +51,7 @@ public class ImageDbData extends DbData {
 	}
 
 	@Override
-	public ProtoProcessor<?> getPersistentData(String key) {
+	public ImageProtoProcessor getPersistentData(String key) {
 		// TODO Auto-generated method stub
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(TABLE_NAME, new String[] {COLUMN_KEY, COLUMN_DATA}, 

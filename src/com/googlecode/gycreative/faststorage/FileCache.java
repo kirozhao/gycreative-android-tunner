@@ -36,10 +36,7 @@ public abstract class FileCache implements Cache, PersistentData{
 	}
 
 	@Override
-	public ProtoProcessor<?> getPersistentData(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract ProtoProcessor<?> getPersistentData(String key);
 
 	@Override
 	public abstract ProtoProcessor<?> getObject(String key);

@@ -23,6 +23,10 @@ public class ImageFileCache extends FileCache {
 		makeFileCacheDir();
 	}
 
+	/**
+	 * return is [(Key, ImageProtoProcessor), ....], so you can force cast to ImageProtoProcessor, then
+	 * call toBitmap on ImageProtoProcessor object to get the bitmap
+	 */
 	@Override
 	public HashMap<String, ProtoProcessor<?>> exportData() {
 		// TODO Auto-generated method stub
@@ -50,6 +54,12 @@ public class ImageFileCache extends FileCache {
 		ImageProtoProcessor image = new ImageProtoProcessor();
 		image.fromByteArray(data);
 		return image;
+	}
+
+	@Override
+	public ProtoProcessor<?> getPersistentData(String key) {
+		// TODO Auto-generated method stub
+		return this.getObject(key);
 	}
 
 }
