@@ -60,6 +60,10 @@ public class HttpDataConnectionImpl extends DataConnection{
 	private Context context;
 
 	private URI uri;
+	/**
+	 * 通过此请求的网络接口共用一个httpclient
+	 */
+	public static HttpClient httpClient;
 
 
 	public HttpDataConnectionImpl(Context context, URI uri) {
@@ -67,10 +71,48 @@ public class HttpDataConnectionImpl extends DataConnection{
 		this.context = context;
 		this.uri = uri;
 		init();
+		if(httpClient==null)
+		httpClient= getNewInstance(context);
 	}
 	
 
+	
+	/* (non-Javadoc)
+	 * @see com.googlecode.gycreative.dataconn.DataConnection#send(byte[])
+	 */
+	@Override
+	public void send(byte[] bytes) {
+		
 
+		HttpPost httpPost = new HttpPost(uri);
+		// TODO 这里可以增加header参数 如user-agent等等
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		NameValuePair nameValuePair = new BasicNameValuePair(HTTPPOST_KEY, bytes.toString());
+		
+		nameValuePairs.add(nameValuePair);
+        try {
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
+			
+        } catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+		
+		
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			parser.resetReader(httpResponse.getEntity().getContent());
+			
+			parseData();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * 
@@ -78,6 +120,7 @@ public class HttpDataConnectionImpl extends DataConnection{
 	 * @return  多线程可安全访问,适配代理的HttpClient
 	 */
 	public static HttpClient getNewInstance(Context mContext) {
+		
 		HttpClient newInstance;
 
 		HttpParams params = new BasicHttpParams();
@@ -181,41 +224,6 @@ public class HttpDataConnectionImpl extends DataConnection{
 		return NETWORK_DISABLED;
 	}
 
-
-
-	@Override
-	public void send(byte[] bytes) {
-		
-		HttpClient httpClient = getNewInstance(context);
-		HttpPost httpPost = new HttpPost(uri);
-		// TODO 这里可以增加header参数 如user-agent等等
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		NameValuePair nameValuePair = new BasicNameValuePair(HTTPPOST_KEY, bytes.toString());
-		
-		nameValuePairs.add(nameValuePair);
-        try {
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
-			
-        } catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
-		
-		
-		try {
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-			parser.resetReader(httpResponse.getEntity().getContent());
-			
-			parseData();
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 
 
 
