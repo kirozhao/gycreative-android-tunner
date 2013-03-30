@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class WithImageItem implements Item{
 	private final LayoutInflater inflater;
 	String textString;
-	//image
+	//image information
 	
 	private static class ViewHolder {
 		final ImageView imageView;
