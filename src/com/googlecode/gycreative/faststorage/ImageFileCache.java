@@ -8,7 +8,8 @@ import android.content.Context;
 import com.googlecode.gycreative.faststorage.protoprocessor.ImageProtoProcessor;
 import com.googlecode.gycreative.faststorage.protoprocessor.ProtoProcessor;
 
-public class ImageFileCache extends FileCache {
+
+public class ImageFileCache extends FileCache<ImageProtoProcessor> {
 
 
 	public ImageFileCache(Context context, String filePath) {
@@ -28,9 +29,9 @@ public class ImageFileCache extends FileCache {
 	 * call toBitmap on ImageProtoProcessor object to get the bitmap
 	 */
 	@Override
-	public HashMap<String, ProtoProcessor<?>> exportData() {
+	public HashMap<String, ImageProtoProcessor> exportData() {
 		// TODO Auto-generated method stub
-		HashMap<String, ProtoProcessor<?>> data = new HashMap<String, ProtoProcessor<?>>();
+		HashMap<String, ImageProtoProcessor> data = new HashMap<String, ImageProtoProcessor>();
 		File[] files = this.fileCacheDir.listFiles();
 		for (File f : files) {
 			if (f.exists()) {
@@ -57,7 +58,7 @@ public class ImageFileCache extends FileCache {
 	}
 
 	@Override
-	public ProtoProcessor<?> getPersistentData(String key) {
+	public ImageProtoProcessor getPersistentData(String key) {
 		// TODO Auto-generated method stub
 		return this.getObject(key);
 	}
