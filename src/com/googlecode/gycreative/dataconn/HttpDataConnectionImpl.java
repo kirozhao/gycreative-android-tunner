@@ -3,7 +3,6 @@ package com.googlecode.gycreative.dataconn;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
