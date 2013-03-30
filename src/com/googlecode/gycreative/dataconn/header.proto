@@ -1,0 +1,8 @@
+message headerinfo{
+  required int32 Proto=1;//协议版本
+  required int32 TYPE = 2;//命令
+  required int32 Content_length = 3;//数据包长度
+  required int32 SEQC = 4;//序列号
+  
+
+}

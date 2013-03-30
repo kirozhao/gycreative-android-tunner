@@ -2,8 +2,9 @@ package com.googlecode.gycreative.dataconn;
 
 /*package*/class DataConnectionImpl implements DataConnection {
 
+
 	@Override
-	public void send() {
+	public void send(char[] bytes) {
 		// TODO Auto-generated method stub
 		
 	}
