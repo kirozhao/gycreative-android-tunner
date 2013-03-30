@@ -1,6 +1,7 @@
 package com.googlecode.gycreative.dataconn;
 
-/*package*/class DataConnectionImpl implements DataConnection {
+/*
+class DataConnectionImpl implements DataConnection {
 
 
 	@Override
@@ -27,4 +28,4 @@ package com.googlecode.gycreative.dataconn;
 		
 	}
 
-}
+}*/
