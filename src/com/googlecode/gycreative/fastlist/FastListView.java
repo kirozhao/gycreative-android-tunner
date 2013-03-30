@@ -6,6 +6,8 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Process;
+import android.os.StrictMode;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
@@ -21,9 +23,23 @@ public class FastListView extends ListView{
 		currentTime=0;
 		refreshFPSflag=false;
 		paint = new Paint();
+		activateStrictMode();
 		startCalculateFps();
 	}
 	
+	private void activateStrictMode() {
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+						.detectDiskReads()
+						.detectDiskWrites()
+						.detectAll() 
+						.penaltyLog() // logcat
+						.build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+				.detectLeakedSqlLiteObjects() // SQLite
+				.penaltyLog() // logcat
+				.penaltyDeath().build());
+	}
+
 	@Override
 	public void onDraw(Canvas canvas){
 		super.onDraw(canvas);
@@ -33,8 +49,7 @@ public class FastListView extends ListView{
 	}
 	
 	private void startCalculateFps() {
-		// TODO Auto-generated method stub
-		new Thread(){
+		Thread thread = new Thread(){
 			@Override
 			public void run(){
 				try {
@@ -58,7 +73,9 @@ public class FastListView extends ListView{
 					e.printStackTrace();
 				}
 			}
-		}.start();
+		};
+		thread.setPriority( Process.THREAD_PRIORITY_BACKGROUND );
+		thread.start();
 	}
 
 }
