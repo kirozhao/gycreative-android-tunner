@@ -72,7 +72,7 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 			else {
 				// get data from file
 				ImageProtoProcessor fileData = (ImageProtoProcessor) this.fileCache.getObject(key);
-				Log.d(TAG, "in get, finished get fileData, fileData = " + fileData);
+				//Log.d(TAG, "in get, finished get fileData, fileData = " + fileData);
 				if (fileData != null) {
 					// put fileData into memCache
 					this.memoryCache.writeObject(key, fileData);
@@ -90,7 +90,7 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 			else {
 				// get data from db
 				ImageProtoProcessor dbData = (ImageProtoProcessor) this.dbData.getPersistentData(key);
-				Log.d(TAG, "in get, finished get dbData, dbData = " + dbData);
+				//Log.d(TAG, "in get, finished get dbData, dbData = " + dbData);
 				if (dbData != null) {
 					// put dbData into memCache
 					this.memoryCache.writeObject(key, dbData);

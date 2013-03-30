@@ -59,7 +59,14 @@ public class MemoryCache<T extends ProtoProcessor> implements Cache<T> {
 	}
 	
 	private int getSize(T o) {
-		int size = o.serializeDataToByteArray().length;
+		int size = 0;
+		/*
+		 * in multi threads environment, some object may be deleted by other threads, so at this
+		 * time, the Object 'o' may be null, at the result, the system will waste lots of time to
+		 * handle this shit NULLPOINTEREXCEPTION!!!!!!!! >_<
+		 */
+		if (o != null)
+			size = o.serializeDataToByteArray().length;
 		return size;
 	}
 
