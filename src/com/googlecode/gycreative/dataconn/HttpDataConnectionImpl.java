@@ -1,15 +1,24 @@
 package com.googlecode.gycreative.dataconn;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnRoutePNames;
@@ -19,11 +28,13 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -32,7 +43,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.text.TextUtils;
 
-public class HttpDataConnectionImpl implements DataConnection{
+public class HttpDataConnectionImpl extends DataConnection{
 	
 	public static final String CTWAP = "ctwap";
 	public static final String CMWAP = "cmwap";
@@ -54,12 +65,16 @@ public class HttpDataConnectionImpl implements DataConnection{
 	private Context context;
 
 	private URI uri;
-	
-	
+
+
 	public HttpDataConnectionImpl(Context context, URI uri) {
 		super();
 		this.context = context;
 		this.uri = uri;
+	}
+	void init() {
+		
+		   parser = new WechatDataParser();
 	}
 
 
@@ -171,14 +186,33 @@ public class HttpDataConnectionImpl implements DataConnection{
 
 
 	@Override
-	public void send() {
-		// TODO Auto-generated method stub
+	public void send(char[] bytes) {
+		
 		HttpClient httpClient = getNewInstance(context);
-		HttpGet httpGet = new HttpGet(uri);
+		HttpPost httpPost = new HttpPost(uri);
+		// TODO 这里可以增加header参数 如user-agent等等
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		NameValuePair nameValuePair = new BasicNameValuePair(HTTPPOST_KEY, bytes.toString());
+		
+		nameValuePairs.add(nameValuePair);
+        try {
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
+			
+        } catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+		
 		
 		try {
-			HttpResponse httpResponse = httpClient.execute(httpGet);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
 			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(  
+                    httpResponse.getEntity().getContent()));  
+		    
+			parser.resetReader(reader);
+			
+			parseData();
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
