@@ -226,6 +226,19 @@ public class HttpDataConnectionImpl extends DataConnection{
 
 
 
+	@Override
+	public void shutdown() {
+		try {
+			parser.getInputStream().close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+
+
 
 
 	
