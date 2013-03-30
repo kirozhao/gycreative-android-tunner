@@ -1,0 +1,4 @@
+message Image {
+    required string imageKey = 1;
+    required bytes imageData = 2;
+}
