@@ -2,53 +2,47 @@ package com.googlecode.gycreative.faststorage;
 
 import java.util.HashMap;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.googlecode.gycreative.faststorage.protoprocessor.ProtoProcessor;
 
-public abstract class DbData extends SQLiteOpenHelper implements PersistentData{
-	
+public abstract class DbData<T extends ProtoProcessor> extends SQLiteOpenHelper implements PersistentData<T> {
 
 	public static final String COLUMN_KEY = "key";
 	public static final String COLUMN_DATA = "data";
-	public static String TABLE_NAME = "dbdata"; // default table name
 	public static final int VERSION = 1;
 	
-	public String CREATE_DB_SQL = "CREATE TABLE " + TABLE_NAME + " ( " + 
-					BaseColumns._ID + " INT PRIMARY KEY, " + 
-					COLUMN_KEY + " TEXT NOT NULL, " + 
-					COLUMN_DATA + " BLOB NOT NULL " + ");";
+	public static final String TAG = "DbData";
+
 	
-	public DbData(Context context, String tablename) {
-		super(context, tablename, null, VERSION);
+	public DbData(Context context, String name) {
+		super(context, name, null, VERSION);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public abstract HashMap<String, ProtoProcessor<?>> exportData();
+	public abstract HashMap<String, T> exportData();
 
 	@Override
-	public abstract void writePersistentData(ProtoProcessor<?> o, String key);
-	
+	public abstract void writePersistentData(T o, String key);
 
 	@Override
-	public abstract ProtoProcessor<?> getPersistentData(String key);
+	public abstract T getPersistentData(String key);
 
 	@Override
-	public abstract void onCreate(SQLiteDatabase db);
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	public void importData(HashMap<String, T> data) {
 		// TODO Auto-generated method stub
-		
+		for (String key : data.keySet()) {
+			T t = data.get(key);
+			this.writePersistentData(t, key);
+		}
 	}
 
-	
+	public abstract void clear();
 
 }
