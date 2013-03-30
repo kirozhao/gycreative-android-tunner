@@ -51,7 +51,8 @@ public abstract class  DataConnection {
 	}
 	
 	/**
-	 * 为其他推送的消息
+	 * 为其他推送的消息，根据不同类型进行分发，可设置listeners
+	 * 
 	 */
 	void onNotify(){
 		byte[] bytes = parser.getBody();
@@ -84,6 +85,7 @@ public abstract class  DataConnection {
 			
 			break;
 		case WechatDataParser.TYPE_IMAGE:
+		case WechatDataParser.TYPE_TEXT:
 			onRecv();
 
 		default:
