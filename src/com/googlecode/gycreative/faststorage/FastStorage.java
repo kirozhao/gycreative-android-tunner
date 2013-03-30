@@ -126,6 +126,28 @@ public abstract class FastStorage<DATA_TYPE extends ProtoProcessor> {
 	 */
 	public abstract void put(String key, DATA_TYPE o);
 	
+	public MemoryCache<DATA_TYPE> getMemoryCache() {
+		return this.memoryCache;
+	}
 	
+	public FileCache<DATA_TYPE> getFileData() {
+		return this.fileCache;
+	}
+	
+	public DbData<DATA_TYPE> getDbData() {
+		return this.dbData;
+	}
+	
+	public void clearData() {
+		if (this.memoryCache != null) {
+			this.memoryCache.clear();
+		}
+		if (this.dbData != null) {
+			this.dbData.clear();
+		}
+		if (this.fileCache != null) {
+			this.fileCache.clear();
+		}
+	}
 
 }

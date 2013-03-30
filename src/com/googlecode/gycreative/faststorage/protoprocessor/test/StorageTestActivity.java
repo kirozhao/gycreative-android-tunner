@@ -67,7 +67,7 @@ public class StorageTestActivity extends Activity {
 			textView.append(e.getLocalizedMessage() + "\n");
 		}
 		
-		/*
+		
 		// mem and db cache
 		textView.append("\n");
 		imageStorageBenchmark = new ImageStorageBenchmark(this, CachePolicy.MEM_DB_CACHE);
@@ -82,7 +82,7 @@ public class StorageTestActivity extends Activity {
 					@Override
 					public void onFinish(long time) {
 						// TODO Auto-generated method stub
-						textView.append("get " + testPicNum + " pictures: use " + time + "ms" + "\n");
+						textView.append("get " + testPicNum + " pictures: use " + time + "ms" + "\n");	
 					}
 					
 				});
@@ -91,7 +91,7 @@ public class StorageTestActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			textView.append(e.getLocalizedMessage() + "\n");
-		}*/
+		}
 	
 		
 		// mem and file cache

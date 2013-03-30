@@ -94,4 +94,13 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 		
 	}
 
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.execSQL("DROP TABLE " + TABLE_NAME + ";");
+		db.execSQL(CREATE_DB_SQL);
+		db.close();
+	}
+
 }

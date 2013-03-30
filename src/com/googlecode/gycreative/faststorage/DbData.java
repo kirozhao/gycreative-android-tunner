@@ -34,5 +34,15 @@ public abstract class DbData<T extends ProtoProcessor> extends SQLiteOpenHelper 
 	@Override
 	public abstract T getPersistentData(String key);
 
+	@Override
+	public void importData(HashMap<String, T> data) {
+		// TODO Auto-generated method stub
+		for (String key : data.keySet()) {
+			T t = data.get(key);
+			this.writePersistentData(t, key);
+		}
+	}
+
+	public abstract void clear();
 
 }

@@ -9,7 +9,8 @@ import android.os.Environment;
 import com.googlecode.gycreative.faststorage.protoprocessor.ProtoProcessor;
 
 public abstract class FileCache<T extends ProtoProcessor> implements Cache<T>, PersistentData<T> {
-	
+
+
 	protected String filePath = null;
 	protected static final String TAG = "FileCache";
 	protected File fileCacheDir = null;
@@ -65,6 +66,13 @@ public abstract class FileCache<T extends ProtoProcessor> implements Cache<T>, P
 		}
 	}
 
-
+	@Override
+	public void importData(HashMap<String, T> data) {
+		// TODO Auto-generated method stub
+		for (String key : data.keySet()) {
+			T t = data.get(key);
+			this.writeObject(key, t);
+		}
+	}
 
 }
