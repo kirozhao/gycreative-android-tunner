@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>java</name>
+			<type>2</type>
+			<location>/media/works/tencent/finalProject/protobuf-2.4.1/java</location>
+		</link>
+	</linkedResources>
 </projectDescription>
