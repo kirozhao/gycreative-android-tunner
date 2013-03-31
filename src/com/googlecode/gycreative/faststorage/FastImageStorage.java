@@ -108,17 +108,20 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 		return null;
 	}
 
-	public void put(String key, ImageProtoProcessor data) {
+	public ImageProtoProcessor put(String key, ImageProtoProcessor data) {
 		// TODO Auto-generated method stub
 		if (cachePolicy == CachePolicy.MEM_CACHE) {
 			this.memoryCache.writeObject(key, data);
 		}
 		else if (cachePolicy == CachePolicy.MEM_DB_CACHE) {
 			this.dbData.writePersistentData(data, key);
+			this.memoryCache.writeObject(key, data);
 		}
 		else if (cachePolicy == CachePolicy.MEM_FILE_CACHE) {
 			this.fileCache.writeObject(key, data);
+			this.memoryCache.writeObject(key, data);
 		}
+		return data;
 	}
 	
 	public void shutdownStorage() {

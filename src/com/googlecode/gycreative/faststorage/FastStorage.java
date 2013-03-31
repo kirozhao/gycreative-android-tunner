@@ -129,7 +129,7 @@ public abstract class FastStorage<DATA_TYPE extends ProtoProcessor> {
 	 * @param key
 	 * @param o
 	 */
-	public abstract void put(String key, DATA_TYPE o);
+	public abstract DATA_TYPE put(String key, DATA_TYPE o);
 	
 	public MemoryCache<DATA_TYPE> getMemoryCache() {
 		return this.memoryCache;
