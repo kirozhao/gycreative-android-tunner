@@ -23,10 +23,10 @@ import android.os.Message;
  * @author zhouml
  * @version  createTime:20132013-3-30ионГ7:55:26
  * */
-public class CPBBitmapCache {
+public class AsyncBitmapCache {
 	private HashMap<String, SoftReference<Drawable>> imageCache;
 
-	public CPBBitmapCache() {
+	public AsyncBitmapCache() {
 		imageCache = new HashMap<String, SoftReference<Drawable>>();
 	}
 	
