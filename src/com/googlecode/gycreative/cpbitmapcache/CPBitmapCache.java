@@ -25,7 +25,7 @@ import android.os.RemoteException;
 public class CPBitmapCache extends Service {
 
 	private CPBinder MycpBinder;
-	private AsyncBitmapCache myBitmapCache ;
+
 	private Context mcontext;
 	public class CPBinder extends Stub
 	{
@@ -34,25 +34,15 @@ public class CPBitmapCache extends Service {
 		public Bitmap getCPBitmap() throws RemoteException {
 			// TODO Auto-generated method stub
 //			int myint=0;
-			Drawable cachedImage_icon = myBitmapCache.loadDrawable(mcontext,
-					"http://image.sjrjy.com/201011/291354164ea84578066309.jpg", new AsyncBitmapCache.ImageCallback_LW() {
-					public void imageLoaded(Drawable imageDrawable,String imageUrls) {
-					
-						
-					}
-					},"listCache",400,false);
-			
+			Drawable cachedImage_icon = AsyncBitmapCache.getBitmapCache( "http://a3.twimg.com/profile_images/670625317/aam-logo-v3-twitter.png");
+
 
 					if (cachedImage_icon == null) {
 					//载入中，先暂时将其设置为默认载入图片；
 						cachedImage_icon=mcontext.getResources().getDrawable(R.drawable.ic_launcher);
-
-					} else {
-					//载入完成 ，将其设置为已载入图片；
-						return drawableToBitmap(cachedImage_icon);
 					}
 			
-			
+					
 			return drawableToBitmap(cachedImage_icon);
 		}
 
@@ -62,7 +52,7 @@ public class CPBitmapCache extends Service {
 	public void onCreate()
 	{
 		super.onCreate();
-		myBitmapCache = new AsyncBitmapCache();
+
 		mcontext=this;
 		MycpBinder=new CPBinder();
 

@@ -24,12 +24,25 @@ import android.os.Message;
  * @version  createTime:20132013-3-30上午7:55:26
  * */
 public class AsyncBitmapCache {
-	private HashMap<String, SoftReference<Drawable>> imageCache;
+	private static HashMap<String, SoftReference<Drawable>> imageCache=new HashMap<String, SoftReference<Drawable>>();;
 
 	public AsyncBitmapCache() {
-		imageCache = new HashMap<String, SoftReference<Drawable>>();
+
 	}
 	
+	
+	
+	public static Drawable  getBitmapCache(final String imageUrl) {
+		Drawable mydrawable = null;
+		if (imageCache.containsKey(imageUrl)) {
+			SoftReference<Drawable> softReference = imageCache.get(imageUrl);
+			mydrawable= softReference.get();
+	
+		}
+
+			return mydrawable;
+
+	}
 	
 	/**
 	 * 获取软引用下 的Drawable对象（将会自行测量并进行设置inSampleSize操作参数缩小内存占用）.
