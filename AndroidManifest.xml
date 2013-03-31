@@ -37,6 +37,12 @@ android:largeScreens="true"
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+       <service android:name=".cpbitmapcache.CPBitmapCache" >
+			<intent-filter>
+				<action android:name="com.googlecode.gycreative.cpbitmapcache.action.CP_SERVICE" />
+			</intent-filter>
+		</service>
     </application>
     
 
