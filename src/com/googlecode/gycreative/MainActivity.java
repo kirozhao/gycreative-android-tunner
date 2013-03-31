@@ -18,6 +18,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		FastListView listView = (FastListView)findViewById(R.id.listView);
+		FastListAdapter adapter = new FastListAdapter();
 		
 		ArrayList<Item> list = new ArrayList<Item>();
 		TextItem item1 = new TextItem("123", LayoutInflater.from(MainActivity.this));
@@ -26,10 +27,12 @@ public class MainActivity extends Activity {
 		list.add(item2);
 		NetworkImageItem item3 = new NetworkImageItem(
 				"234",
-				"http://a3.twimg.com/profile_images/670625317/aam-logo-v3-twitter.png",
+				"http://blog.ce.cn/sp1/blog_attachments/2009/08/355332_200908251016235zoac.jpg",
 				LayoutInflater.from(MainActivity.this), this);
+		item3.setAdapter(adapter);
 		list.add(item3);
-		FastListAdapter adapter = new FastListAdapter(list);
+		
+		adapter.addItems(list);
 		listView.setAdapter(adapter);
 	}
 

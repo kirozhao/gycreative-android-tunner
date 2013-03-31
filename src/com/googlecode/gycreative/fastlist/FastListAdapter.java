@@ -10,6 +10,10 @@ import android.widget.BaseAdapter;
 public class FastListAdapter extends BaseAdapter {
 	private List<Item>allDataObj;
 	
+	public FastListAdapter(){
+		allDataObj = new ArrayList<Item>();
+	}
+	
 	public FastListAdapter(List<Item>list){
 		allDataObj = new ArrayList<Item>();
 		allDataObj.addAll(list);
