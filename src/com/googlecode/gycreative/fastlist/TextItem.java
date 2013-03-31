@@ -1,6 +1,8 @@
 package com.googlecode.gycreative.fastlist;
 
 import com.googlecode.gycreative.R;
+
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,18 +26,6 @@ public class TextItem implements Item{
 	
 	public void  setText(String s){
 		textString = s;
-	}
-	
-	public void loadDataByFastStorage(){
-		
-	}
-	
-	public void loadBitmapByCPBitmapCache(){
-		
-	}
-	
-	public void loadDataByDataConnection(){
-		
 	}
 	
 	@Override
