@@ -11,11 +11,12 @@ public class SocketDataConnectionImpl extends DataConnection {
 	private URI uri;
 	Socket socket;
 	MsgWriter msgWriter;
+	MsgReader msgReader;
 	
 
 
 	/**
-	 * 阻塞构造，建立长连接,创建写线程，构造线程成为读线程。
+	 * 阻塞构造，建立长连接,创建写线程，读线程。
 	 * @param context
 	 * @param uri
 	 */
@@ -24,7 +25,7 @@ public class SocketDataConnectionImpl extends DataConnection {
 		
 		this.uri = uri;
 		
-		//建立socket和写线程,心跳线程并初始化parser，并开始读数据
+		//建立socket和写线程和读线程,心跳线程并初始化parser，并开始读数据
 		init();
 	}
 
@@ -35,7 +36,9 @@ public class SocketDataConnectionImpl extends DataConnection {
 			msgWriter.startup();
 			InputStream inputStream = socket.getInputStream();
 			parser.setInputStream(inputStream);
-			parseData();
+			msgReader = new MsgReader(this, parser);
+			msgReader.startup();
+			//parseData();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +57,7 @@ public class SocketDataConnectionImpl extends DataConnection {
 	@Override
 	public void send(byte[] bytes) {
 	
-			
+			if(connected)
 			msgWriter.sendMsg(bytes);
 			
 		
@@ -73,6 +76,7 @@ public class SocketDataConnectionImpl extends DataConnection {
 	public void shutdown() {
 		// TODO Auto-generated method stub
 		msgWriter.shutdown();
+		 connected = false;
 		try {
 		parser.getInputStream().close();
 		

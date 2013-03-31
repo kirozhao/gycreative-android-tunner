@@ -83,7 +83,7 @@ public class HttpDataConnectionImpl extends DataConnection{
 	@Override
 	public void send(byte[] msg) {
 		
-
+		if(connected){
 		HttpPost httpPost = new HttpPost(uri);
 		// TODO 这里可以增加header参数 如user-agent等等
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -111,6 +111,7 @@ public class HttpDataConnectionImpl extends DataConnection{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 		
 	}
@@ -229,8 +230,10 @@ public class HttpDataConnectionImpl extends DataConnection{
 
 	@Override
 	public void shutdown() {
+		
 		try {
 			parser.getInputStream().close();
+			 connected = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -238,6 +241,20 @@ public class HttpDataConnectionImpl extends DataConnection{
 		
 	}
 
+
+
+	public URI getUri() {
+		return uri;
+	}
+
+
+
+	public void setUri(URI uri) {
+		this.uri = uri;
+	}
+
+	
+	
 
 
 

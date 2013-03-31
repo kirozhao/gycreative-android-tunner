@@ -10,6 +10,8 @@ public abstract class DataConnection {
 	WechatDataParser parser;
 	LoadImageCallBack loadImageCallBack;
 	LoadTextCallBack loadTextCallBack;
+	//是否还连接
+	protected boolean connected = false;
 	// 区分接受数据流量类型根据协议头部字段
 	int recvtype = 0;
 	// 区分发送数据流量类型根据协议头部字段
@@ -21,10 +23,12 @@ public abstract class DataConnection {
 	void init() {
 
 		parser = new WechatDataParser();
+		 connected = true;
 	}
 
 	/**
-	 * 同步阻塞方式
+	 * socket下非阻塞
+	 * http下阻塞方式
 	 * 
 	 * @param bytes
 	 *            socket通信时表示要发送协议的字节数组(默认长连接，服务器write后close()则连接关闭)，
