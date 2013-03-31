@@ -16,12 +16,13 @@ public class FastListView extends ListView{
 	private List<Long>timeList = new ArrayList<Long>();
 	private long currentTime;
 	private boolean refreshFPSflag;
+	private boolean removeFlag;
 	private Paint paint;
 	
 	public FastListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		currentTime=0;
-		refreshFPSflag=false;
+		refreshFPSflag = removeFlag =false;
 		paint = new Paint();
 		activateStrictMode();
 		startCalculateFps();
@@ -45,6 +46,8 @@ public class FastListView extends ListView{
 		super.onDraw(canvas);
 		if(!refreshFPSflag)
 			timeList.add( System.currentTimeMillis() );
+		else 
+			refreshFPSflag=false;
 		canvas.drawText("fps:"+ timeList.size(), 300, 10, paint);
 	}
 	
@@ -54,19 +57,22 @@ public class FastListView extends ListView{
 			public void run(){
 				try {
 					while(true){
-						Thread.sleep(50);
+						Thread.sleep(200);
 						refreshFPSflag=false;
+						removeFlag=false;
 						currentTime = System.currentTimeMillis();
 						for(int i=0;i<timeList.size();i++){
 							if(timeList.get(i) < currentTime-1000){
 								timeList.remove(i);
 								i--;
-								refreshFPSflag=true;
+								removeFlag=true;
 							}
 							else break;
 						}
-						if(refreshFPSflag)
+						if(removeFlag){
+							refreshFPSflag=true;
 							postInvalidate();
+						}
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

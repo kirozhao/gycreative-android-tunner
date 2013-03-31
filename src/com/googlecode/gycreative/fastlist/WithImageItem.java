@@ -5,7 +5,6 @@ import com.googlecode.gycreative.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings.TextSize;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +29,18 @@ public class WithImageItem implements Item{
 	
 	public void setText(String s){
 		textString = s;
+	}
+	
+	public void loadDataByFastStorage(){
+		
+	}
+	
+	public void loadBitmapByCPBitmapCache(){
+		
+	}
+	
+	public void loadDataByDataConnection(){
+		
 	}
 	
 	@Override
