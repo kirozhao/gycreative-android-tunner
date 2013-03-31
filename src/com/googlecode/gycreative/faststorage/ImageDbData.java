@@ -59,15 +59,23 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 		Cursor cursor = db.query(TABLE_NAME, new String[] {COLUMN_KEY, COLUMN_DATA}, 
 				COLUMN_KEY + " = '" + key + "'", null, null, null, null);
 		cursor.moveToFirst();
-		int dataIndex = cursor.getColumnIndex(COLUMN_DATA);
-		//Log.d(TAG, "in getPersistentData, dataIndex is " + dataIndex);
-		byte[] data = cursor.getBlob(dataIndex);
-		ImageProtoProcessor image = new ImageProtoProcessor();
-		image.fromByteArray(data);
-		Log.d(TAG, "in getPersistentData, successfully get image");
-		cursor.close();
-		db.close();
-		return image;
+		if (cursor.getCount() > 0) {
+			int dataIndex = cursor.getColumnIndex(COLUMN_DATA);
+			//Log.d(TAG, "in getPersistentData, dataIndex is " + dataIndex);
+			byte[] data = cursor.getBlob(dataIndex);
+			ImageProtoProcessor image = new ImageProtoProcessor();
+			image.fromByteArray(data);
+			if (Util.DEBUG)
+				Log.d(TAG, "in getPersistentData, successfully get image");
+			cursor.close();
+			db.close();
+			return image;
+		}
+		else {
+			if (Util.DEBUG)
+				Log.d(TAG, "in getPersistentData, return null");
+			return null;
+		}
 	}
 
 	@Override
@@ -84,6 +92,8 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 		values.put(COLUMN_KEY, key);
 		values.put(COLUMN_DATA, data);
 		SQLiteDatabase db = this.getWritableDatabase();
+		// first delete old values
+		db.delete(TABLE_NAME, COLUMN_KEY + "= '" + key + "'", null);
 		db.insert(TABLE_NAME, null, values);
 		db.close();
 	}

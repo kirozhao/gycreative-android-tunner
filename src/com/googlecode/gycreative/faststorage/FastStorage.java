@@ -55,7 +55,8 @@ public abstract class FastStorage<DATA_TYPE extends ProtoProcessor> {
 	public void loadData(String key) {
 		DATA_TYPE data = this.memoryCache.getObject(key);
 		if (data != null) {
-			//Log.d(TAG, "in loadData, got data from memoryCache");
+			if (Util.DEBUG)
+				Log.d(TAG, "in loadData, got data from memoryCache");
 			if (this.loadCallback != null) {
 				loadCallback.afterLoad(key, data);
 			}
@@ -70,7 +71,8 @@ public abstract class FastStorage<DATA_TYPE extends ProtoProcessor> {
 			this.loadCallback = callback;
 			DATA_TYPE data = this.memoryCache.getObject(key);
 			if (data != null) {
-				//Log.d(TAG, "in loadData, got data from memoryCache");
+				if (Util.DEBUG)
+					Log.d(TAG, "in loadData, got data from memoryCache");
 				if (this.loadCallback != null) {
 					loadCallback.afterLoad(key, data);
 				}

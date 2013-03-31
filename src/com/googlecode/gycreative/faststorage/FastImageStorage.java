@@ -54,9 +54,11 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 	@Override
 	public ImageProtoProcessor get(String key) {
 		// TODO Auto-generated method stub
-		//Log.d(TAG, "in get, key is " + key);
+		if (Util.DEBUG)
+			Log.d(TAG, "in get, key is " + key);
 		ImageProtoProcessor memData = (ImageProtoProcessor) this.memoryCache.getObject(key);
-		//Log.d(TAG, "finished get memData, memData = " + memData);
+		if (Util.DEBUG)
+			Log.d(TAG, "finished get memData, memData = " + memData);
 		if (cachePolicy == CachePolicy.MEM_CACHE) {
 			if (memData != null) {
 				return memData;
@@ -72,7 +74,8 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 			else {
 				// get data from file
 				ImageProtoProcessor fileData = (ImageProtoProcessor) this.fileCache.getObject(key);
-				//Log.d(TAG, "in get, finished get fileData, fileData = " + fileData);
+				if (Util.DEBUG)
+					Log.d(TAG, "in get, finished get fileData, fileData = " + fileData);
 				if (fileData != null) {
 					// put fileData into memCache
 					this.memoryCache.writeObject(key, fileData);
@@ -90,7 +93,8 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 			else {
 				// get data from db
 				ImageProtoProcessor dbData = (ImageProtoProcessor) this.dbData.getPersistentData(key);
-				//Log.d(TAG, "in get, finished get dbData, dbData = " + dbData);
+				if (Util.DEBUG)
+					Log.d(TAG, "in get, finished get dbData, dbData = " + dbData);
 				if (dbData != null) {
 					// put dbData into memCache
 					this.memoryCache.writeObject(key, dbData);

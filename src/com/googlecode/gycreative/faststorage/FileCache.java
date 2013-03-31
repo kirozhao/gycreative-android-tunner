@@ -49,6 +49,7 @@ public abstract class FileCache<T extends ProtoProcessor> implements Cache<T>, P
 		if (f.exists()) {
 			f.delete();
 		}
+		f = new File(fileCacheDir, key);
 		byte[] data = o.serializeDataToByteArray();
 		Util.writeFile(f, data);
 	}

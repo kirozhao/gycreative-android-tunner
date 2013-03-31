@@ -43,7 +43,8 @@ public class MemoryCache<T extends ProtoProcessor> implements Cache<T> {
 	}
 	
 	private void checkSize() {
-		Log.d(TAG, "cache size=" + size + " length=" + cache.size());
+		if (Util.DEBUG)
+			Log.d(TAG, "cache size=" + size + " length=" + cache.size());
 		if (size > limit) {
 			Iterator<Entry<String, T>> iter = cache.entrySet().iterator();
 			// least recently accessed item will be the first one iterated
@@ -54,7 +55,8 @@ public class MemoryCache<T extends ProtoProcessor> implements Cache<T> {
 				if (size <= limit)
 					break;
 			}
-			Log.d(TAG, "Clean cache. New size " + cache.size());
+			if (Util.DEBUG)
+				Log.d(TAG, "Clean cache. New size " + cache.size());
 		}
 	}
 	

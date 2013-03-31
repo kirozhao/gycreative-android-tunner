@@ -4,13 +4,14 @@ import java.io.File;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.googlecode.gycreative.faststorage.protoprocessor.ImageProtoProcessor;
-import com.googlecode.gycreative.faststorage.protoprocessor.ProtoProcessor;
 
 
 public class ImageFileCache extends FileCache<ImageProtoProcessor> {
 
+	public static final String TAG = "ImageFileCache";
 
 	public ImageFileCache(Context context, String filePath) {
 		this.filePath = filePath;
@@ -54,6 +55,8 @@ public class ImageFileCache extends FileCache<ImageProtoProcessor> {
 		byte[] data = Util.readFile(f);
 		ImageProtoProcessor image = new ImageProtoProcessor();
 		image.fromByteArray(data);
+		if (Util.DEBUG)
+			Log.d(TAG, "successfully get image from file");
 		return image;
 	}
 

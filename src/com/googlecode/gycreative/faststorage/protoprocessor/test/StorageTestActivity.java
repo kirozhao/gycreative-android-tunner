@@ -25,7 +25,7 @@ public class StorageTestActivity extends Activity {
 	Bitmap bitmap;
 	Bitmap resultBitmap;
 	ImageStorageBenchmark imageStorageBenchmark;
-	int testPicNum = 100;
+	int testPicNum = 50;
 	boolean simulateSlow = false;
 	boolean ifAsync = true;
 	
