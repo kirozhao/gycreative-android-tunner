@@ -2,18 +2,13 @@ package com.googlecode.gycreative;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import com.googlecode.gycreative.cpbitmapcache.util.ConfigScreen;
 import com.googlecode.gycreative.fastlist.FastListAdapter;
 import com.googlecode.gycreative.fastlist.FastListView;
 import com.googlecode.gycreative.fastlist.Item;
-import com.googlecode.gycreative.fastlist.TextItem;
-import com.googlecode.gycreative.fastlist.NetworkImageItem;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
-import android.view.LayoutInflater;
 
 public class MainActivity extends Activity {
 	private FastListView listView;
