@@ -43,7 +43,7 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 			return;
 		}
 		else if (this.cachePolicy == CachePolicy.MEM_DB_CACHE) {
-			this.dbData = new ImageDbData(context);
+			this.dbData = ImageDbData.getInstance(context);
 		}
 		else if (this.cachePolicy == CachePolicy.MEM_FILE_CACHE) {
 			this.fileCache = new ImageFileCache(context);
@@ -120,6 +120,10 @@ public class FastImageStorage extends FastStorage<ImageProtoProcessor> {
 			this.fileCache.writeObject(key, data);
 		}
 	}
-
-
+	
+	public void shutdownStorage() {
+		if (cachePolicy == CachePolicy.MEM_DB_CACHE) {
+			ImageDbData.closeDbConnection();
+		}
+	}
 }

@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Util {
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	
 	public static byte[] readFile(File f) {
 		byte [] fileData = new byte[(int)f.length()];

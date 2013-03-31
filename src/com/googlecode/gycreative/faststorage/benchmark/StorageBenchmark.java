@@ -8,7 +8,11 @@ import com.googlecode.gycreative.faststorage.protoprocessor.ProtoProcessor;
 
 public abstract class StorageBenchmark<DATA_TYPE extends ProtoProcessor> {
 	
-	protected int SIMULATE_SLOW_SLEEP_TIME = 100;
+	/*
+	 * the amount of time to sleep after each get() or put() call
+	 */
+	protected int SIMULATE_SLOW_SLEEP_TIME = 100; 
+	
 	protected FastStorage<DATA_TYPE> storage = null;
 	
 	/**

@@ -30,10 +30,10 @@ public class ImageProtoProcessor implements ProtoProcessor<Imageproto.Image> {
 		genProtoObject(data);
 	}
 
-	@Override
 	/**
 	 * data is [("imageKey", keyValue), ("imageData", byteStringData)]
 	 */
+	@Override
 	public Image genProtoObject(HashMap<String, Object> data) {
 		// TODO Auto-generated method stub
 		Imageproto.Image.Builder builder = Imageproto.Image.newBuilder();
