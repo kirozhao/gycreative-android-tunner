@@ -3,25 +3,11 @@ package com.googlecode.gycreative.fastlist;
 import com.googlecode.gycreative.R;
 import com.googlecode.gycreative.cpbitmapcache.AsyncBitmapCache;
 import com.googlecode.gycreative.cpbitmapcache.util.ConfigScreen;
-import com.googlecode.gycreative.dataconn.DataConnection;
-import com.googlecode.gycreative.dataconn.DataConnectionFactory;
-import com.googlecode.gycreative.dataconn.DataConnection.LoadImageCallBack;
-import com.googlecode.gycreative.faststorage.FastImageStorage;
-import com.googlecode.gycreative.faststorage.FastStorage;
-import com.googlecode.gycreative.faststorage.FastStorage.StorageCallback;
-import com.googlecode.gycreative.faststorage.exception.ErrorCachePolicy;
-import com.googlecode.gycreative.faststorage.protoprocessor.ImageProtoProcessor;
-
-import android.R.raw;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class NetworkImageItem implements Item{
 	private final LayoutInflater inflater;

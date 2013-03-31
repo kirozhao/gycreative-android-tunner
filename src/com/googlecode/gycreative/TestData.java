@@ -6,10 +6,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import com.googlecode.gycreative.fastlist.Item;
 import com.googlecode.gycreative.fastlist.NetworkImageItem;
+import com.googlecode.gycreative.fastlist.NetworkImageItem2;
 import com.googlecode.gycreative.fastlist.TextItem;
 
 public class TestData {
 	private static ArrayList<Item> list = new ArrayList<Item>();
+	
+	public static ArrayList<Item> initalizeData(Context context){
+        	//list.add(new TextItem("text1", LayoutInflater.from(context)));
+        	//list.add(new TextItem("text2", LayoutInflater.from(context)));
+        	for(int i=0;i<mStrings.length;i++){
+        		list.add(new NetworkImageItem2(mStrings[i],LayoutInflater.from(context),context));
+        	}
+        	return list;
+	}
+	
 	private static String[] mStrings={
 		            "http://a3.twimg.com/profile_images/670625317/aam-logo-v3-twitter.png",
 		            "http://a3.twimg.com/profile_images/740897825/AndroidCast-350_normal.png",
@@ -119,12 +130,5 @@ public class TestData {
 		            "http://a3.twimg.com/profile_images/77641093/AndroidPlanet_normal.png"
 	};
 	
-	public static ArrayList<Item> initalizeData(Context context){
-        	//list.add(new TextItem("text1", LayoutInflater.from(context)));
-        	//list.add(new TextItem("text2", LayoutInflater.from(context)));
-        	for(int i=0;i<mStrings.length;i++){
-        		list.add(new NetworkImageItem(mStrings[i],LayoutInflater.from(context),context));
-        	}
-        	return list;
-	}
+
 }

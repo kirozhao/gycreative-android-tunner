@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onDestroy() {
+		super.onDestroy();
 		listView.setAdapter(null);
 		File file = new File(Environment.getExternalStorageDirectory()
 				+ "/listCache");
@@ -37,6 +38,6 @@ public class MainActivity extends Activity {
 			return;
 		for (File f : files)
 			f.delete();
-		super.onDestroy();
+		
 	}
 }
