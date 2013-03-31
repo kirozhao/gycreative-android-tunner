@@ -25,7 +25,7 @@ public class StorageTestActivity extends Activity {
 	Bitmap bitmap;
 	Bitmap resultBitmap;
 	ImageStorageBenchmark imageStorageBenchmark;
-	int testPicNum = 50;
+	int testPicNum = 20;
 	boolean simulateSlow = false;
 	boolean ifAsync = true;
 	
@@ -42,7 +42,7 @@ public class StorageTestActivity extends Activity {
 			data.put(i + "", new ImageProtoProcessor(i + "", bitmap));
 		}
 		
-		
+		/*
 		// mem cache
 		imageStorageBenchmark = new ImageStorageBenchmark(this, CachePolicy.MEM_CACHE);
 		textView.append("Now is memCache\n");
@@ -66,7 +66,7 @@ public class StorageTestActivity extends Activity {
 			e.printStackTrace();
 			textView.append(e.getLocalizedMessage() + "\n");
 		}
-		
+		*/
 		
 		// mem and db cache
 		textView.append("\n");
@@ -93,7 +93,7 @@ public class StorageTestActivity extends Activity {
 			textView.append(e.getLocalizedMessage() + "\n");
 		}
 	
-		
+		/*
 		// mem and file cache
 		textView.append("\n");
 		imageStorageBenchmark = new ImageStorageBenchmark(this, CachePolicy.MEM_FILE_CACHE);
@@ -117,7 +117,7 @@ public class StorageTestActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			textView.append(e.getLocalizedMessage() + "\n");
-		}
+		}*/
 	}
 
 	@Override

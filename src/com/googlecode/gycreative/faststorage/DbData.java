@@ -20,7 +20,7 @@ public abstract class DbData<T extends ProtoProcessor> extends SQLiteOpenHelper 
 	public static final String TAG = "DbData";
 
 	
-	public DbData(Context context, String name) {
+	protected DbData(Context context, String name) {
 		super(context, name, null, VERSION);
 		// TODO Auto-generated constructor stub
 	}

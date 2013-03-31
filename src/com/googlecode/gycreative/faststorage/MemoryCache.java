@@ -107,5 +107,11 @@ public class MemoryCache<T extends ProtoProcessor> implements Cache<T> {
 			th.printStackTrace();
 		}
 	}
+	
+	public boolean checkIfExist(String key) {
+		if (cache.containsKey(key))
+			return true;
+		return false;
+	}
 
 }

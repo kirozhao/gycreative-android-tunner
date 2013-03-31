@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Set;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.googlecode.gycreative.faststorage.FastImageStorage;
 import com.googlecode.gycreative.faststorage.FastStorage;
+import com.googlecode.gycreative.faststorage.Util;
 import com.googlecode.gycreative.faststorage.exception.ErrorCachePolicy;
 import com.googlecode.gycreative.faststorage.protoprocessor.ImageProtoProcessor;
 
@@ -15,7 +17,6 @@ public class ImageStorageBenchmark extends StorageBenchmark<ImageProtoProcessor>
 
 	public static final String TAG = "ImageStorageBenchmark";
 	private Set<String> keySet = null;
-	private long asyncTimeCount = 0;
 	
 	public ImageStorageBenchmark(Context context, int cachePolicy) {
 		try {
@@ -57,7 +58,12 @@ public class ImageStorageBenchmark extends StorageBenchmark<ImageProtoProcessor>
 		else {
 			long startTime = System.currentTimeMillis();
 			for (String key : this.keySet) {
-				storage.get(key);
+				ImageProtoProcessor image = storage.get(key);
+				if (Util.DEBUG) {
+					Bitmap bitmap = image.toBitmap();
+					Log.d(TAG, "in testGetAllData, key is " + key  +", bitmap.width = " + 
+							bitmap.getWidth() + ", bitmap.height = " + bitmap.getHeight());
+				}
 				if (ifSimulateSlow) {
 					try {
 						Thread.sleep(SIMULATE_SLOW_SLEEP_TIME);
@@ -98,6 +104,11 @@ public class ImageStorageBenchmark extends StorageBenchmark<ImageProtoProcessor>
 						if (key.equals(String.valueOf(keySet.size() - 1))) {
 							long currentTime = System.currentTimeMillis();
 							callback.onFinish(currentTime - startTime);
+						}
+						if (Util.DEBUG) {
+							Bitmap bitmap = data.toBitmap();
+							Log.d(TAG, "in testAsynGetAllData, key is " + key  +", bitmap.width = " + 
+									bitmap.getWidth() + ", bitmap.height = " + bitmap.getHeight());
 						}
 					}
 	

@@ -21,10 +21,28 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 			COLUMN_KEY + " TEXT NOT NULL, " + 
 			COLUMN_DATA + " BLOB NOT NULL " + ");";
 	public static final String TAG = "ImageDbData";
+	
+	private static ImageDbData instance = null;
+	private static SQLiteDatabase db = null; // keep one connection
+	
+	public static ImageDbData getInstance(Context context) {
+		if (instance == null) {
+			instance = new ImageDbData(context);
+			return instance;
+		}
+		else {
+			return instance;
+		}
+	}
+	
+	public static void closeDbConnection() {
+		db.close();
+	}
 
-	public ImageDbData(Context context) {
+	protected ImageDbData(Context context) {
 		super(context, TABLE_NAME);
 		// TODO Auto-generated constructor stub
+		db = this.getWritableDatabase();
 	}
 
 	/**
@@ -34,7 +52,7 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 	@Override
 	public HashMap<String, ImageProtoProcessor> exportData() {
 		// TODO Auto-generated method stub
-		SQLiteDatabase db = this.getReadableDatabase();
+		//SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(TABLE_NAME, new String[] {COLUMN_KEY, COLUMN_DATA}, 
 				null, null, null, null, null);
 		HashMap<String, ImageProtoProcessor> data = new HashMap<String, ImageProtoProcessor>();
@@ -48,14 +66,14 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 			data.put(key, image);
 		}
 		cursor.close();
-		db.close();
+		//db.close();
 		return data;
 	}
 
 	@Override
 	public ImageProtoProcessor getPersistentData(String key) {
 		// TODO Auto-generated method stub
-		SQLiteDatabase db = this.getReadableDatabase();
+		//SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(TABLE_NAME, new String[] {COLUMN_KEY, COLUMN_DATA}, 
 				COLUMN_KEY + " = '" + key + "'", null, null, null, null);
 		cursor.moveToFirst();
@@ -68,7 +86,7 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 			if (Util.DEBUG)
 				Log.d(TAG, "in getPersistentData, successfully get image");
 			cursor.close();
-			db.close();
+			//db.close();
 			return image;
 		}
 		else {
@@ -91,11 +109,11 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_KEY, key);
 		values.put(COLUMN_DATA, data);
-		SQLiteDatabase db = this.getWritableDatabase();
+		//SQLiteDatabase db = this.getWritableDatabase();
 		// first delete old values
 		db.delete(TABLE_NAME, COLUMN_KEY + "= '" + key + "'", null);
 		db.insert(TABLE_NAME, null, values);
-		db.close();
+		//db.close();
 	}
 
 	@Override
@@ -110,7 +128,7 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL("DROP TABLE " + TABLE_NAME + ";");
 		db.execSQL(CREATE_DB_SQL);
-		db.close();
+		//db.close();
 	}
 
 }
