@@ -99,11 +99,14 @@ public abstract class FastStorage<DATA_TYPE extends ProtoProcessor> {
 			try {
 				DATA_TYPE data = get(key);
 				if (data == null) {
-					loadCallback.loadError(key, new DataNotExistException(key)); // regard no data as an error
+					if (loadCallback != null)
+						//DataNotExistException e= new DataNotExistException(key);
+						loadCallback.loadError(key, new DataNotExistException(key)); // regard no data as an error
 				}
-				memoryCache.writeObject(key, data);
-				if (loadCallback != null) {
-					loadCallback.afterLoad(key, data);
+				else {
+					if (loadCallback != null) {
+						loadCallback.afterLoad(key, data);
+					}
 				}
 			} catch (Exception e) {
 				loadCallback.loadError(key, e);

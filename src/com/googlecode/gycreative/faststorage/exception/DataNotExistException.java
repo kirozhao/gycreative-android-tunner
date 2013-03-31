@@ -1,6 +1,10 @@
 package com.googlecode.gycreative.faststorage.exception;
 
 public class DataNotExistException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String key = null;
 	
 	public DataNotExistException(String key) {

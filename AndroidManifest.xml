@@ -38,7 +38,7 @@ android:largeScreens="true"
         </activity>
          -->  
         <activity
-            android:name="com.googlecode.gycreative.faststorage.protoprocessor.test.StorageTestActivity"
+            android:name="com.googlecode.gycreative.MainActivity"
             android:label="@string/title_activity_storage_test" >
             
             <intent-filter>
