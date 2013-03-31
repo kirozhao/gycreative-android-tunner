@@ -54,7 +54,8 @@ public class TextItem implements Item{
 
 	@Override
 	public int getViewType() {
-		return ItemType.TEXT.ordinal();
+		return 0;
+		//return ItemType.TEXT.ordinal();
 	}
 	
 }

@@ -15,8 +15,7 @@ public class FastListAdapter extends BaseAdapter {
 	}
 	
 	public FastListAdapter(List<Item>list){
-		allDataObj = new ArrayList<Item>();
-		allDataObj.addAll(list);
+		allDataObj = list;
 	}
 	
 	public void addItem(Item i){
@@ -34,7 +33,7 @@ public class FastListAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		return allDataObj.get(position);
+		return position;
 	}
 
 	@Override
@@ -54,7 +53,6 @@ public class FastListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		//firstly pre-load some image of the following items
 		return allDataObj.get(position).getView(convertView);		
 	}
 }

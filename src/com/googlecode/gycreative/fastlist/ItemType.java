@@ -1,5 +1,5 @@
 package com.googlecode.gycreative.fastlist;
 
 public enum ItemType {
-	TEXT, WITHIMAGE
+	WITHIMAGE
 }

@@ -19,6 +19,19 @@ public class DataConnectionBitmapLoader {
 	Context context;
 	String imageString;
 	
+	public void loadBitmap(String imageString, ImageView imageView, Context context){
+		FastImageStorage storage;
+		this.imageView = imageView;
+		this.imageString = imageString;
+		this.context = context;
+		try {
+			storage = new FastImageStorage(context, FastStorage.CachePolicy.MEM_FILE_CACHE);
+			storage.loadData(imageString, callback);
+		} catch (ErrorCachePolicy e) {
+			e.printStackTrace();
+		}
+	}
+	
 	StorageCallback<ImageProtoProcessor> callback = new StorageCallback<ImageProtoProcessor>(){
 		@Override
 		//从本地获得数据
@@ -29,31 +42,23 @@ public class DataConnectionBitmapLoader {
 		//本地没有，从网络获取
 		public void loadError(String key, Exception e) {
 			DataConnection dataConnection = DataConnectionFactory
-					.openConnection(context, imageString);
-			dataConnection
-					.setLoadImageCallBack(new LoadImageCallBack() {
-						@Override
-						public void imageLoaded(
-								Bitmap bitmap) {
-							imageView
-									.setImageBitmap(bitmap);
-						}
-					});
+										.openConnection(context, imageString);
+			dataConnection.setLoadImageCallBack(new LoadImageCallBack() {
+				@Override
+				public void imageLoaded(Bitmap bitmap) {
+					imageView.setImageBitmap(bitmap);
+					//将数据缓存起来
+					FastImageStorage storage=null;
+					try {
+						storage = new FastImageStorage(context,FastStorage.CachePolicy.MEM_FILE_CACHE);
+						ImageProtoProcessor image = new ImageProtoProcessor(imageString,bitmap);
+						storage.put(imageString,image);
+					} catch (ErrorCachePolicy e) {
+						e.printStackTrace();
+					}
+				}
+			});
 			dataConnection.send(null);//传递协议的自己数组
 		}
 	};
-	
-	public void loadBitmap(String imageString, ImageView imageView, Context context){
-		FastImageStorage storage;
-		this.imageView = imageView;
-		this.imageString = imageString;
-		this.context = context;
-		try {
-			storage = new FastImageStorage(context, FastStorage.CachePolicy.MEM_FILE_CACHE);
-			storage.loadData(imageString, callback);
-		} catch (ErrorCachePolicy e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
