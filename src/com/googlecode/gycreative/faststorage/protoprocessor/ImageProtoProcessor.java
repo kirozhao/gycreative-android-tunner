@@ -1,5 +1,6 @@
 package com.googlecode.gycreative.faststorage.protoprocessor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -16,6 +17,18 @@ public class ImageProtoProcessor implements ProtoProcessor<Imageproto.Image> {
 
 	public Imageproto.Image image = null;
 	
+	public ImageProtoProcessor() {}
+	
+	public ImageProtoProcessor(String key, Bitmap bitmap) {
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		byte[] byteArray = stream.toByteArray();
+		ByteString byteString = ByteString.copyFrom(byteArray);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("imageKey", key);
+		data.put("imageData", byteString);
+		genProtoObject(data);
+	}
 
 	@Override
 	/**
@@ -50,7 +63,7 @@ public class ImageProtoProcessor implements ProtoProcessor<Imageproto.Image> {
 	}
 
 	public Bitmap toBitmap() {
-		byte[] data = this.image.toByteArray();
+		byte[] data = this.image.getImageData().toByteArray();
 		return BitmapFactory.decodeByteArray(data, 0, data.length);
 	}
 
