@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 		list.add(item2);
 		NetworkImageItem item3 = new NetworkImageItem(
 				"234",
-				"http://blog.ce.cn/sp1/blog_attachments/2009/08/355332_200908251016235zoac.jpg",
+				"http://image.sjrjy.com/201011/291354164ea84578066309.jpg",
 				LayoutInflater.from(MainActivity.this), this);
 		item3.setAdapter(adapter);
 		list.add(item3);
