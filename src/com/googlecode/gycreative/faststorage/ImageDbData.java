@@ -24,25 +24,28 @@ public class ImageDbData extends DbData<ImageProtoProcessor> {
 	
 	private static ImageDbData instance = null;
 	private static SQLiteDatabase db = null; // keep one connection
+	private static boolean ifClose = false;
 	
 	public static ImageDbData getInstance(Context context) {
 		if (instance == null) {
 			instance = new ImageDbData(context);
-			return instance;
 		}
-		else {
-			return instance;
+		if (ifClose) {
+			db = instance.getWritableDatabase();
 		}
+		return instance;
 	}
 	
 	public static void closeDbConnection() {
 		db.close();
+		ifClose = true;
 	}
 
 	protected ImageDbData(Context context) {
 		super(context, TABLE_NAME);
 		// TODO Auto-generated constructor stub
 		db = this.getWritableDatabase();
+		ifClose = false;
 	}
 
 	/**
