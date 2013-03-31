@@ -82,8 +82,9 @@ public class HttpDataConnectionImpl extends DataConnection{
 	 */
 	@Override
 	public void send(byte[] msg) {
+		if(!connected)
+			throw new IllegalStateException("the connection had been closed.");
 		
-		if(connected){
 		HttpPost httpPost = new HttpPost(uri);
 		// TODO 这里可以增加header参数 如user-agent等等
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -112,8 +113,8 @@ public class HttpDataConnectionImpl extends DataConnection{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		}
 		
+	
 	}
 
 	/**

@@ -56,8 +56,9 @@ public class SocketDataConnectionImpl extends DataConnection {
 	 */
 	@Override
 	public void send(byte[] bytes) {
-	
-			if(connected)
+		if(!connected)
+		throw new IllegalStateException("the connection had been closed.");
+			
 			msgWriter.sendMsg(bytes);
 			
 		

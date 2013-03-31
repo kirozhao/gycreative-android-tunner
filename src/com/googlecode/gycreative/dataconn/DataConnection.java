@@ -29,6 +29,7 @@ public abstract class DataConnection {
 	/**
 	 * socket下非阻塞
 	 * http下阻塞方式
+	 * 如果连接已经被关闭会抛出IllegalStateException异常
 	 * 
 	 * @param bytes
 	 *            socket通信时表示要发送协议的字节数组(默认长连接，服务器write后close()则连接关闭)，
@@ -40,6 +41,11 @@ public abstract class DataConnection {
 	 * 关闭连接
 	 */
 	public abstract void shutdown();
+	
+	public void checkConnected() {
+		if(!connected)
+			throw new IllegalStateException("the connection had been closed.");
+	}
 
 	/**
 	 * 这个包是前一次send的onRecv,接受完数据调用callback
