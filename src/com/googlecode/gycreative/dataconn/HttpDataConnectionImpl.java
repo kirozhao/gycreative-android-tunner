@@ -81,13 +81,13 @@ public class HttpDataConnectionImpl extends DataConnection{
 	 * @see com.googlecode.gycreative.dataconn.DataConnection#send(byte[])
 	 */
 	@Override
-	public void send(byte[] bytes) {
+	public void send(byte[] msg) {
 		
 
 		HttpPost httpPost = new HttpPost(uri);
 		// TODO 这里可以增加header参数 如user-agent等等
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		NameValuePair nameValuePair = new BasicNameValuePair(HTTPPOST_KEY, bytes.toString());
+		NameValuePair nameValuePair = new BasicNameValuePair(HTTPPOST_KEY, msg.toString());
 		
 		nameValuePairs.add(nameValuePair);
         try {
@@ -101,6 +101,7 @@ public class HttpDataConnectionImpl extends DataConnection{
 		
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpPost);
+			onSendStatus(msg);
 			parser.resetReader(httpResponse.getEntity().getContent());
 			
 			parseData();

@@ -2,13 +2,9 @@ package com.googlecode.gycreative.dataconn;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URI;
 import java.net.UnknownHostException;
-import java.util.concurrent.BlockingQueue;
-
-import android.content.Context;
 
 public class SocketDataConnectionImpl extends DataConnection {
 

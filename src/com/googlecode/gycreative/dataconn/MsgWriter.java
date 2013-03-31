@@ -84,6 +84,7 @@ public class MsgWriter {
 	                    synchronized (writer) {
 	                        writer.write(msg);
 	                        writer.flush();
+	                        connection.onSendStatus(msg);
 	                        lastActive = System.currentTimeMillis();
 	                    	}
 	                }
