@@ -1,6 +1,10 @@
 .svn/*
-bin/*
-gen/*
 .DS_Store
 
 .idea/
+local.properties
+
+.gradle/
+build/
+
+**/*.iml
